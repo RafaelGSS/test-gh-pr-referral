@@ -1,0 +1,39 @@
+name: Benchmark
+on:
+  pull_request:
+    types: [labeled]
+
+jobs:
+  pr-benchmark:
+    if: ${{ github.event.label.name == 'benchmark' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Benchmark
+        id: benchmark-pr
+        run: |
+          echo '::set-output name=SELECTED_COLOR::green'
+
+      # main benchmark
+      - uses: actions/checkout@v2
+        with:
+          ref: 'main'
+
+      - name: Benchmark
+        id: benchmark-main
+        run: |
+          echo '::set-output name=SELECTED_COLOR::red'
+
+      - name: comment PR
+        uses: unsplash/comment-on-pr@master
+        env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: steps.benchmark.output.SELECTED_COLOR
+
+      - uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          labels: |
+            performance
+          github_token: ${{ secrets.GITHUB_TOKEN }}
