@@ -14,6 +14,7 @@ jobs:
         id: benchmark-pr
         run: |
           README_TEXT=$(cat ./README.md)
+          ls
           echo "::set-output name=README_PR::$README_TEXT"
 
       # main benchmark
