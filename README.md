@@ -1,1 +1,1 @@
-# test-gh-pr-referral - pr-owner
+# test-gh-pr-referral - owner
