@@ -14,7 +14,7 @@ jobs:
         id: benchmark-pr
         run: |
           README_TEXT=$(cat ./README.md)
-          echo "::set-output name=README_PR::$README_TEXT"
+          echo "::set-output name=README::$README_TEXT"
 
       # main benchmark
       - uses: actions/checkout@v2
@@ -25,14 +25,14 @@ jobs:
         id: benchmark-main
         run: |
           README_TEXT=$(cat ./README.md)
-          echo "::set-output name=README_MAIN::$README_TEXT"
+          echo "::set-output name=README::$README_TEXT"
           
       - name: comment PR
         uses: unsplash/comment-on-pr@master
         env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: "PR: ${{ steps.benchmark.output.README_PR }}\nMAIN: ${{ steps.benchmark.output.README_TEXT }}"
+          msg: "PR: ${{ steps.benchmark-pr.output.README }}\nMAIN: ${{ steps.benchmark-main.output.README }}"
 
       - uses: actions-ecosystem/action-remove-labels@v1
         with:
