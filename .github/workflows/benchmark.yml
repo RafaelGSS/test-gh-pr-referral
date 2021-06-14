@@ -27,12 +27,11 @@ jobs:
           README_TEXT=$(cat ./README.md)
           echo "::set-output name=README::$README_TEXT"
           
-      - name: comment PR
-        uses: unsplash/comment-on-pr@master
-        env:
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@master
         with:
-          msg: "PR: ${{ steps.benchmark-pr.outputs.README }}\nMAIN: ${{ steps.benchmark-main.outputs.README }}"
+          message: "PR: ${{ steps.benchmark-pr.outputs.README }}\nMAIN: ${{ steps.benchmark-main.outputs.README }}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions-ecosystem/action-remove-labels@v1
         with:
