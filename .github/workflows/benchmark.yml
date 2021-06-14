@@ -14,8 +14,6 @@ jobs:
         id: benchmark-pr
         run: |
           README_TEXT=$(cat ./README.md)
-          cat ./README.md
-          echo $README_TEXT
           echo "::set-output name=README::$README_TEXT"
 
       # main benchmark
@@ -34,7 +32,7 @@ jobs:
         env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: "PR: ${{ steps.benchmark-pr.output.README }}\nMAIN: ${{ steps.benchmark-main.output.README }}"
+          msg: "PR: ${{ steps.benchmark-pr.outputs.README }}\nMAIN: ${{ steps.benchmark-main.outputs.README }}"
 
       - uses: actions-ecosystem/action-remove-labels@v1
         with:
