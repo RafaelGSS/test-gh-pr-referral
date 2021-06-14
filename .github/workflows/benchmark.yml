@@ -1,11 +1,11 @@
 name: Benchmark
 on:
   pull_request_target:
-    types: [labeled]
+   # types: [labeled]
 
 jobs:
   pr-benchmark:
-    if: ${{ github.event.label.name == 'benchmark' }}
+    #if: ${{ github.event.label.name == 'benchmark' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
