@@ -1,1 +1,1 @@
-# test-gh-pr-referral - pr-author
+# test-gh-pr-referral - pr author
