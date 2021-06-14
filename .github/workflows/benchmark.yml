@@ -8,6 +8,9 @@ jobs:
     #if: ${{ github.event.label.name == 'benchmark' }}
     runs-on: ubuntu-latest
     steps:
+      - run: |
+          echo "$GITHUB_REF"
+        
       - uses: actions/checkout@v2
 
       - name: Benchmark
