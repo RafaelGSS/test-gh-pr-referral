@@ -7,6 +7,9 @@ jobs:
   pr-benchmark:
     if: ${{ github.event.label.name == 'benchmark' }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10, 12, 14, 16]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -14,7 +17,7 @@ jobs:
           repository: ${{github.event.pull_request.head.repo.full_name}}
 
       - name: Benchmark
-        id: benchmark-pr
+        id: benchmark-pr-${{matrix-node-version}}
         run: |
           README_TEXT=$(cat ./README.md)
           echo "::set-output name=README::$README_TEXT"
@@ -25,16 +28,32 @@ jobs:
           ref: 'main'
 
       - name: Benchmark
-        id: benchmark-main
+        id: benchmark-main-${{matrix.node-version}
         run: |
           README_TEXT=$(cat ./README.md)
           echo "::set-output name=README::$README_TEXT"
           
+  comment:
+    runs-on: ubuntu-latest 
+    needs: [pr-benchmark]
+    steps:
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@master
         with:
-          message: "PR: ${{ steps.benchmark-pr.outputs.README }}\nMAIN: ${{ steps.benchmark-main.outputs.README }}"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         message: |
+          Node: 10
+          PR: ${{ needs.pr-benchmark.benchmark-pr-10.outputs.README }}
+          MAIN: ${{ needs.pr-benchmark.benchmark-main-10.outputs.README }}"
+          Node: 12
+          PR: ${{ needs.pr-benchmark.benchmark-pr-12.outputs.README }}
+          MAIN: ${{ needs.pr-benchmark.benchmark-main-12.outputs.README }}"
+          Node: 14
+          PR: ${{ needs.pr-benchmark.benchmark-pr-14.outputs.README }}
+          MAIN: ${{ needs.pr-benchmark.benchmark-main-14.outputs.README }}"
+          Node: 16
+          PR: ${{ needs.pr-benchmark.benchmark-pr-16.outputs.README }}
+          MAIN: ${{ needs.pr-benchmark.benchmark-main-16.outputs.README }}"
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions-ecosystem/action-remove-labels@v1
         with:
