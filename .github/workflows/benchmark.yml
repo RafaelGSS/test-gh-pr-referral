@@ -7,6 +7,15 @@ jobs:
   pr-benchmark:
     if: ${{ github.event.label.name == 'benchmark' }}
     runs-on: ubuntu-latest
+    outputs:
+      PR-README10: ${{ steps.benchmark-pr.outputs.README10 }}
+      PR-README12: ${{ steps.benchmark-pr.outputs.README12 }}
+      PR-README14: ${{ steps.benchmark-pr.outputs.README14 }}
+      PR-README16: ${{ steps.benchmark-pr.outputs.README16 }}
+      MAIN-README10: ${{ steps.benchmark-main.outputs.README10 }}
+      MAIN-README12: ${{ steps.benchmark-main.outputs.README12 }}
+      MAIN-README14: ${{ steps.benchmark-main.outputs.README14 }}
+      MAIN-README16: ${{ steps.benchmark-main.outputs.README16 }}
     strategy:
       matrix:
         node-version: [10, 12, 14, 16]
@@ -41,18 +50,21 @@ jobs:
         uses: thollander/actions-comment-pull-request@master
         with:
          message: |
-          Node: 10
-          PR: ${{ needs.pr-benchmark.benchmark-pr.outputs.README10 }}
-          MAIN: ${{ needs.pr-benchmark.benchmark-main.outputs.README10 }}"
-          Node: 12
-          PR: ${{ needs.pr-benchmark.benchmark-pr.outputs.README12 }}
-          MAIN: ${{ needs.pr-benchmark.benchmark-main.outputs.README12 }}"
-          Node: 14
-          PR: ${{ needs.pr-benchmark.benchmark-pr.outputs.README14 }}
-          MAIN: ${{ needs.pr-benchmark.benchmark-main.outputs.README14 }}"
-          Node: 16
-          PR: ${{ needs.pr-benchmark.benchmark-pr.outputs.README16 }}
-          MAIN: ${{ needs.pr-benchmark.benchmark-main.outputs.README16 }}"
+          **Node**: 10
+          **PR**: ${{ needs.pr-benchmark.outputs.PR-README10 }}
+          **MAIN**: ${{ needs.pr-benchmark.outputs.MAIN-README10 }}"
+          ---
+          **Node**: 12
+          **PR**: ${{ needs.pr-benchmark.outputs.PR-README12 }}
+          **MAIN**: ${{ needs.pr-benchmark.outputs.MAIN-README12 }}"
+          ---
+          **Node**: 14
+          **PR**: ${{ needs.pr-benchmark.outputs.PR-README14 }}
+          **MAIN**: ${{ needs.pr-benchmark.outputs.MAIN-README14 }}"
+          ---
+          **Node**: 16
+          **PR**: ${{ needs.pr-benchmark.outputs.PR-README16 }}
+          **MAIN**: ${{ needs.pr-benchmark.outputs.MAIN-README16 }}"
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions-ecosystem/action-remove-labels@v1
