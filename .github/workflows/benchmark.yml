@@ -52,19 +52,25 @@ jobs:
          message: |
           **Node**: 10
           **PR**: ${{ needs.pr-benchmark.outputs.PR-README10 }}
-          **MAIN**: ${{ needs.pr-benchmark.outputs.MAIN-README10 }}"
+          **MAIN**: ${{ needs.pr-benchmark.outputs.MAIN-README10 }}
+
           ---
+
           **Node**: 12
           **PR**: ${{ needs.pr-benchmark.outputs.PR-README12 }}
-          **MAIN**: ${{ needs.pr-benchmark.outputs.MAIN-README12 }}"
+          **MAIN**: ${{ needs.pr-benchmark.outputs.MAIN-README12 }}
+
           ---
+
           **Node**: 14
           **PR**: ${{ needs.pr-benchmark.outputs.PR-README14 }}
-          **MAIN**: ${{ needs.pr-benchmark.outputs.MAIN-README14 }}"
+          **MAIN**: ${{ needs.pr-benchmark.outputs.MAIN-README14 }}
+
           ---
+
           **Node**: 16
           **PR**: ${{ needs.pr-benchmark.outputs.PR-README16 }}
-          **MAIN**: ${{ needs.pr-benchmark.outputs.MAIN-README16 }}"
+          **MAIN**: ${{ needs.pr-benchmark.outputs.MAIN-README16 }}
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions-ecosystem/action-remove-labels@v1
