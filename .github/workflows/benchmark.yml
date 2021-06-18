@@ -17,10 +17,10 @@ jobs:
           repository: ${{github.event.pull_request.head.repo.full_name}}
 
       - name: Benchmark
-        id: benchmark-pr-${{ matrix.node-version }}
+        id: benchmark-pr
         run: |
           README_TEXT=$(cat ./README.md)
-          echo "::set-output name=README::$README_TEXT"
+          echo "::set-output name=README${{matrix.node-version}}::$README_TEXT"
 
       # main benchmark
       - uses: actions/checkout@v2
@@ -28,10 +28,10 @@ jobs:
           ref: 'main'
 
       - name: Benchmark
-        id: benchmark-main-${{ matrix.node-version }}
+        id: benchmark-main
         run: |
           README_TEXT=$(cat ./README.md)
-          echo "::set-output name=README::$README_TEXT"
+          echo "::set-output name=README${{matrix.node-version}}::$README_TEXT"
           
   comment:
     runs-on: ubuntu-latest 
@@ -42,17 +42,17 @@ jobs:
         with:
          message: |
           Node: 10
-          PR: ${{ needs.pr-benchmark.benchmark-pr-10.outputs.README }}
-          MAIN: ${{ needs.pr-benchmark.benchmark-main-10.outputs.README }}"
+          PR: ${{ needs.pr-benchmark.benchmark-pr.outputs.README10 }}
+          MAIN: ${{ needs.pr-benchmark.benchmark-main.outputs.README10 }}"
           Node: 12
-          PR: ${{ needs.pr-benchmark.benchmark-pr-12.outputs.README }}
-          MAIN: ${{ needs.pr-benchmark.benchmark-main-12.outputs.README }}"
+          PR: ${{ needs.pr-benchmark.benchmark-pr.outputs.README12 }}
+          MAIN: ${{ needs.pr-benchmark.benchmark-main.outputs.README12 }}"
           Node: 14
-          PR: ${{ needs.pr-benchmark.benchmark-pr-14.outputs.README }}
-          MAIN: ${{ needs.pr-benchmark.benchmark-main-14.outputs.README }}"
+          PR: ${{ needs.pr-benchmark.benchmark-pr.outputs.README14 }}
+          MAIN: ${{ needs.pr-benchmark.benchmark-main.outputs.README14 }}"
           Node: 16
-          PR: ${{ needs.pr-benchmark.benchmark-pr-16.outputs.README }}
-          MAIN: ${{ needs.pr-benchmark.benchmark-main-16.outputs.README }}"
+          PR: ${{ needs.pr-benchmark.benchmark-pr.outputs.README16 }}
+          MAIN: ${{ needs.pr-benchmark.benchmark-main.outputs.README16 }}"
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions-ecosystem/action-remove-labels@v1
