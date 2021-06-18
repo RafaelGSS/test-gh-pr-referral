@@ -17,7 +17,7 @@ jobs:
           repository: ${{github.event.pull_request.head.repo.full_name}}
 
       - name: Benchmark
-        id: benchmark-pr-${{matrix-node-version}}
+        id: benchmark-pr-${{matrix.node-version}}
         run: |
           README_TEXT=$(cat ./README.md)
           echo "::set-output name=README::$README_TEXT"
